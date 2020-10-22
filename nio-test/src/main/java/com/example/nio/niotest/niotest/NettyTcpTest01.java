@@ -9,6 +9,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  *  44
  * netty tcp 快速入门
@@ -42,10 +44,11 @@ public class NettyTcpTest01 {
         ));
     }
 		 */
-		serverBootstrap.group(bossGroup, worksGroup).channel(NioServerSocketChannel.class)
-		.option(ChannelOption.SO_BACKLOG, 128)//设置线程的连接个数
-		.childOption(ChannelOption.SO_KEEPALIVE, true) // 设置保持活动连接的状态
-		.childHandler(new ChannelInitializer<Channel>() {
+		serverBootstrap.group(bossGroup, worksGroup)
+				.channel(NioServerSocketChannel.class)
+				.option(ChannelOption.SO_BACKLOG, 128)//设置线程的连接个数
+				.childOption(ChannelOption.SO_KEEPALIVE, true) // 设置保持活动连接的状态
+				.childHandler(new ChannelInitializer<Channel>() {
 
 			@Override
 			protected void initChannel(Channel ch) throws Exception {
@@ -62,7 +65,27 @@ public class NettyTcpTest01 {
 		channelFuture.channel().closeFuture().sync();				
 						
 		
-	 // 接收客户信息  并发信息 
-		
+	 	// 接收客户信息  并发信息
+		/**
+		 * NioEventLoopGroup 里面主要包含构造方法
+		 *  EventLoop接口、 EventExecutorGroup接口和ScheduledService接口 ----> Executor
+		 */
+		NioEventLoopGroup eventExecutors = new NioEventLoopGroup(1);
+		//eventExecutors.setIoRatio(1);
+		eventExecutors.execute(new Runnable() {
+			@Override
+			public void run() {
+
+			}
+		});
+		// 定时任务
+		eventExecutors.schedule(new Runnable() {
+			@Override
+			public void run() {
+
+			}
+		},10, TimeUnit.SECONDS);
+
+
 	}
 }
