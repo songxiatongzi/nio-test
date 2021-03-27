@@ -31,6 +31,13 @@ public class NettyTcpTest01 {
 		// bossGroup 只处理链接请求
 		// 真正和客户端进行业务处理的，会交给workGroup
 		// 两个都是无限循环
+		/*
+		 * NioEventLoopGroup  selector  taskQueue
+		 * taskQueue 和channel 有一个绑定的关系
+		 * task 有三种典型的使用场景
+		 * 		1.
+		 * 将一些比较耗时的任务放到 taskQueue 中取处理
+		 */
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup worksGroup = new NioEventLoopGroup();
 		
@@ -53,6 +60,9 @@ public class NettyTcpTest01 {
 			@Override
 			protected void initChannel(Channel ch) throws Exception {
 				// TODO Auto-generated method stub
+				// 这是一个双向列表 pipeline
+				// pipeline 和 channel 是相互包含的关系  ctx 则是包含更多的信息，包括pipeline 和 channel
+
 				ch.pipeline().addLast(null);
 			}
 		
@@ -62,30 +72,7 @@ public class NettyTcpTest01 {
 		ChannelFuture channelFuture = serverBootstrap.bind(6666).sync();
 		
 		// 对关闭通道进行监听
-		channelFuture.channel().closeFuture().sync();				
-						
-		
-	 	// 接收客户信息  并发信息
-		/**
-		 * NioEventLoopGroup 里面主要包含构造方法
-		 *  EventLoop接口、 EventExecutorGroup接口和ScheduledService接口 ----> Executor
-		 */
-		NioEventLoopGroup eventExecutors = new NioEventLoopGroup(1);
-		//eventExecutors.setIoRatio(1);
-		eventExecutors.execute(new Runnable() {
-			@Override
-			public void run() {
-
-			}
-		});
-		// 定时任务
-		eventExecutors.schedule(new Runnable() {
-			@Override
-			public void run() {
-
-			}
-		},10, TimeUnit.SECONDS);
-
+		channelFuture.channel().closeFuture().sync();
 
 	}
 }

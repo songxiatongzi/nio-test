@@ -1,5 +1,308 @@
-# ConfigFileApplicationListener
+logging:
+  level:
+    ##日志级别&&开关，务必配置，不可缺失
+    aoplog: "INFO"
+    interface: "INFO"
+    errorlog: "ERROR"
+#解析jwt信息
+sso:
+  isSsoLogin: true
+  jwtHeader: authorization
+tsf:
+  swagger:
+    enabled: true
+server:
+  port: 18014
 spring:
   profiles:
-    active:
-    - dev
+    ##日志环境：dev为非生产环境、prod为生产环境。上线务必配置为prod
+    active: dev
+  application:
+    name: "0202010201"
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    locale: zh
+    time-zone: GMT+8
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
+    deserialization:
+      accept-empty-string-as-null-object: true
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  messages:
+    basename: i18n/defalultMessages,i18n/messages,i18n/exception #指定message的basename，多个以逗坷分隔，如果丝加包坝的话，默认从classpath路径开始，默认: messages
+    encoding: UTF-8 #设定Message bundles的编码，默认: UTF-8 
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+framework:
+  aoplog:
+    enabled: true
+ipservice-ns-map:
+  north: 1100,1200,1300,1400,1500,3400,3200,3700,3702,4100,6100,6200,6300,6400,6500,2102,2100,2300,2200
+  south: 3300,3302,3500,3502,3600,3100,4600,4200,4300,4400,4403,4500,5000,5100,5300,5200,5400
+ipservice-config-map:
+  #如果地址为36套，需要配置-3300,如果地址为全国，那么配置-0000，如果地址分为南北两套，那么北配置-north,南配置-south
+  #承保中心网关
+  c014-3300:
+    url: http://10.156.128.157:30008/zt-dj/c014-3300-dj
+  c014-3200:
+    url: http://10.156.128.10:30052/zt/c014-3200-dj
+  #用户中心网关：
+  c008-0000:
+    url: http://10.156.128.10:32281/zt/c008-0000-dj
+  #综拓中心网关：
+  c002-0000:
+    url: http://10.156.128.10:32325/zt/c002-0000-dj
+  #销售中心-营销网关
+  c013-0000:
+    url: http://10.156.128.10:31904/zt/c013-0000-dj
+  #客户中心-营销网关
+  c001-0000:
+    url: http://10.156.130.60:32165/zt/c001-0000-dj
+  #工具平台网关
+  c012-0000:
+    url: http://10.156.128.192:30681/zt/c012-0000-dj
+  #财务中心网关
+  c006-0000:
+    url: http://10.156.128.10:30863/zt/c006-0000-dj
+  #产品中心网关
+  c009-0000:
+    url: http://10.156.128.10:32677/zt/c009-0000-dj
+  #理赔中心网关
+  c015-0000:
+    url: http://10.156.130.64:3042/zt/c015-0000-dj
+resttemplate:
+  headers:
+    #配置认证的token
+    authorization: BackType eyJhbGciOiJIUzI1NiJ9.eyJhcHBseU1pY3JvU2VydmljZUNvZGUiOiIwMjAyMDEwMjAxIiwiZXhwIjo0MDcwODgwMDAwMDAwfQ.OJvSoDatufvaocI6qkgyQ4X1LKx1dIgqK6qb6dRfS5E
+    #调用方分组
+    group: p04-02
+    #配置接口
+    version: 1.1
+    #配置数据格式
+    contentType: application/json
+###代碼配置
+codeconfig:
+  mobile: 13200000000
+  identifynumbersix: 913100007109314916
+  identifynumberseven: 372925199011058017
+  ddamobile: 18811680207
+common:
+  cifkey: abcvhjiklsshzxjn
+  exInterface:
+    #####命名空间、超时时间按照实际情况配置
+    reInsuranceInfo:
+      interfaceCode: 01014005-002
+      url: /01014005/quotation/quotationToProposal
+      connectTimeOut: 1000
+      readTimeOut: 50000
+    reNewPloicyInfo:
+      interfaceCode: 01014006-027
+      url: /01014006/policy/claim/getPolicySummary
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    queryJyVehicleInfo:
+      interfaceCode: 01014004-016
+      url: /01014004/vehicle/queryJyVehicle
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    queryVehicleByVinInfo:
+      interfaceCode: 01014004-017
+      url: /01014004/vehicle/queryVehicleByVin
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    actualvalueinfo:
+      interfaceCode: 01014005-005
+      url: /01014005/quotation/calActualValue
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    checkCarQuery:
+      interfaceCode: 01014006-027
+      url: /01014006/plat/traffic/queryVehicleCheckJS
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    confirmCarQuery:
+      interfaceCode: 01014006-043
+      url: /01014006/plat/traffic/queryVehicleJS
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    queryVehicleList:
+      interfaceCode: 01014004-008
+      url: /01014004/vehicle/queryVehicleMsg
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    queryCarInfo:
+      interfaceCode: 01014004-009
+      url: /01014004/vehicle/queryMixVehicle
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    checkcodeinfo:
+      interfaceCode: 01014001-019
+      url: /01014001/proposal/checkSMS
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    quotationinfo:
+      interfaceCode: 01014005-011
+      url: /01014005/quotation/quotationAndSave
+      connectTimeOut: 1000
+      readTimeOut: 10000
+    underwrite:
+      interfaceCode: 01014001-030
+      url: /01014001/undwrt/commitToUndwrt
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    proposaldetail:
+      interfaceCode: 01014001-038
+      url: /01014001/prpallForQuery/getProposalDetailData
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    underwritecheck:
+      url: http://10.10.2.76:7891/mst/support/underwritecheck
+      ####人保e通老架构对应环境地址，10.133.250.132:6020 准生产地址
+      ####人保e通老架构对应环境地址，10.133.240.76:7000 生产地址
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    idCardCollectCheckInfo:
+      interfaceCode: 01014001-002
+      url: /01014001/proposal/writeBackCheckCode
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    proposalListQueryInfo:
+      interfaceCode: 01014001-040
+      url: /01014001/prpallForQuery/getProposalOrPolicyList
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    queryvehicledetail:
+      interfaceCode: 01014004-013
+      url: /01014004/vehicle/queryDetailVehicleMsg
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    centralizequeryvehicle:
+      interfaceCode: 01014004-009
+      url: /01014004/vehicle/queryMixVehicle
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    pushcarpolicyinfo:
+      interfaceCode: 01013026-006
+      url: /01013026/propertyinsurancemobilesales/pushnocarpolicyinfo
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    getclausetypeinfo:
+      url: http://10.10.2.76:7891/mst/support/getclausetype
+      ####人保e通老架构对应环境地址，10.133.250.132:6020 准生产地址
+      ####人保e通老架构对应环境地址，10.133.240.76:7000 生产地址
+      connectTimeOut: 60000
+      readTimeOut: 60000
+    gainsignandmsgstatusinfo:
+      interfaceCode: 01014001-051
+      url: /01014001/prpallForEle/gainSignAndMsgStatus
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    getquotaplanlistinfo:
+      interfaceCode: 01014005-006
+      url: /01014005/quotation/queryRationList
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    prpelesignsendinfo:
+      interfaceCode: 01014001-048
+      url: /01014001/prpallForEle/sendEleSignMessage
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    newcarnumsendsmsinfo:
+      interfaceCode: 01014003-001
+      url: /01014003/endorse/sms
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    newcarnumwritebacksmsinfo:
+      interfaceCode: 01014003-027
+      url: /01014003/endorse/writeBackSMS
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    quotationdetailinfo:
+      interfaceCode: 01014005-010
+      url: /01014005/quotation/queryQuotationDetail
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    endornewcar:
+      interfaceCode: 01014003-014
+      url: /01014003/endorse/endorseNewCar
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    endorsementslip:
+      interfaceCode: 01014003-026
+      url: /01014003/endorse/convertToEndorse
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querycarconfiglist:
+      interfaceCode: 01014007-046
+      url: /01014007/common/queryRiskConfigList
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querycarconfiginfo:
+      interfaceCode: 01014007-005
+      url: /01014007/common/queryRiskConfig
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querycarconfigs:
+      interfaceCode: 01014007-065
+      url: /01014007/common/queryRiskConfigs
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    deleteapplyno:
+      interfaceCode: 01014003-017
+      url: /01014003/endorse/applyNoDelete
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    cancelund:
+      interfaceCode: 01014003-005
+      url: /01014003/endorse/cancelUndwrt
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querysignandmsg:
+      interfaceCode: 01014003-048
+      url: /01014003/endorseForSff/querySignAndMsg
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    showuwinfo:
+      interfaceCode: 01014038-019
+      url: /01014038/undwrt/ShowUWInfoServlet
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    updateuserpersonalconfiginfo:
+      interfaceCode: 00002001-026
+      url: /00002001/message/updateuserpersonalconfig
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querypolicydetailinfo:
+      interfaceCode: 01014002-024
+      url: /01014002/policy/front/policyDetailQuery
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    querygiftpackagelist:
+      interfaceCode: 01014005-022
+      url: /01014005/quotation/queryGiftPackageList
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    pickgiftpackageinfo:
+      interfaceCode: 01014001-061
+      url: /01014001/proposal/giftPackagepick
+      connectTimeOut: 1000
+      readTimeOut: 5000
+    idcardmanageinfo:
+      interfaceCode: 00001001-028
+      url: /00001001/contactUtil/idCardManage
+      connectTimeOut: 1000
+      readTimeOut: 1000
+    addquotation:
+      interfaceCode: 01013022-281
+      url: /01013022/marketing/qtQuotation/addQuotationInfo
+      connectTimeOut: 1000
+      readTimeOut: 1000
